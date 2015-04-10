@@ -12,6 +12,7 @@
 */
 
 use App\Player;
+use App\Game;
 
 Route::get('/', 'WelcomeController@index');
 
@@ -30,6 +31,10 @@ Route::get('players', function(){
     $players = \App\Player::all();
 
     print_r($players);
+});
+
+Route::get('gameplay', function(){
+    return view('gameplay')->with(['games' => Game::all(), 'players' => Player::all() ]);
 });
 
 Route::controller('users', 'UserController');

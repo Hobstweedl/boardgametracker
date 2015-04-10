@@ -10,6 +10,7 @@
     <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet" />
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropper/0.9.1/cropper.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css">
         <!-- CUSTOM STYLES-->
     <link href="{{  asset('css/custom.css')}}" rel="stylesheet" />
 
@@ -24,7 +25,6 @@
     <script src="{{  asset('js/jquery.metisMenu.js')}}"></script>
       <!-- CUSTOM SCRIPTS -->
     <script src="{{  asset('js/custom.js')}}"></script>
-    <script src="{{  asset('js/flip.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/0.9.1/cropper.min.js"></script>
 
 </head>

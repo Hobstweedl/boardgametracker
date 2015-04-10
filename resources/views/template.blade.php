@@ -12,6 +12,8 @@
     </div>
 </div>
 
+@yield('scripts')
+
 
 
 @include('components.footer')

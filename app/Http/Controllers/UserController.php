@@ -23,6 +23,37 @@ class UserController extends Controller {
     }
 
     public function getShow($id){
+        return view('user.details')->with(['player' => Player::find($id) ]);
+    }
+
+    public function postShow($id){
+
+        $player = Player::find( $id );
+        $player->name = Request::input('name');
+        $player->save();
+
+        $width = round( Request::input('width'), 0);
+        $height = round( Request::input('height'), 0);
+        $offsetx = round( Request::input('offsetx'), 0);
+        $offsety = round( Request::input('offsety'), 0);
+        
+        
+        if( Request::hasFile('photo')){
+
+            $photo = Request::file('photo');
+            $d = 'people'.DIRECTORY_SEPARATOR.$player->id.'.'.$photo->getClientOriginalExtension();
+
+            Image::make($photo)->crop(
+                $width,
+                $height,
+                $offsetx,
+                $offsety
+            )->resize(400, null, function($c){
+                $c->aspectRatio();
+            })->save($d);
+            
+        }
+        return redirect()->action('UserController@getShow', $id);
 
     }
 
