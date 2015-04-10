@@ -47,6 +47,10 @@
 
                 <div class="form-group">
                     <label>Who won?</label>
+                    <option value="0">Select a Winner</option>
+                    <select id="winner" class="form-control">
+
+                    </select>
                 </div>
 
 
@@ -76,9 +80,38 @@
 <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
 <script>
     $( document ).ready(function() {
-       $( "#sortable1, #sortable2" ).sortable({
-      connectWith: ".connectedSortable"
-    }).disableSelection();
+       $( "#sortable1").sortable({
+          cursor: "move",
+          connectWith: ".connectedSortable",
+          receive: function(event, u){
+            var li = u.item;
+            var id = $(li).data("id");
+            var name = li[0].firstChild.data;
+            var innerhtml = '<div class="row score-input player-detail-' + id + '" > <div class="col-md-3">' + 
+            '<label style="width: 200px;">' + name + '<label>' +
+            '</div> <div class="col-md-6">' +
+            '<input class="form-control" name="person-' + id + '">' + 
+            '</div></div>'
+
+            $("#scores").append(innerhtml)
+
+            $("#winner").append('<option value="' + id + '">' + name + '</option>')
+          },
+          remove: function(event, u){
+            var id = $(u.item).data("id");
+            console.log(id);
+
+            $('div.player-detail-' + id).remove();
+            $('#winner option[value="' + id + '"]').remove();
+
+        
+          }
+          
+        }).disableSelection();
+
+        $( "#sortable2").sortable({
+          connectWith: ".connectedSortable"          
+        }).disableSelection();
     
     });
 </script>
