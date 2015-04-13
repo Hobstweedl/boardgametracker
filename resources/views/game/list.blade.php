@@ -8,18 +8,16 @@
     </div>
 </div>
 
-
-                   
- 
-
     @foreach($games as $g)
         <div class="col-md-3 col-sm-12 col-xs-12">
             <div class="flip-card">
-            <div class="front" style="background: url('{{asset('games/'.camel_case($g->name).'.jpg') }}' ) no-repeat center;">&nbsp;</div>
-            <div class="back">
-                <h3 class="text-center">{{ $g->name }}</h3>
-            </div>
-                <!--<h3 class="text-center">{{ $g->name }}</h3> -->
+                <div class="front" style="background: url('{{asset('games/'.camel_case($g->name).'.jpg') }}' ) no-repeat center;">&nbsp;
+                </div>
+                <a href="{{ action('GameController@getShow', $g->id)}}">
+                <div class="back">
+                    <h3 class="text-center">{{ $g->name }}</h3>
+                </div>
+                </a>
             </div>
         </div>
     @endforeach

@@ -20,7 +20,8 @@
         
                 <div class="form-group">
                     <label>Which game did you play?</label>
-                    <select class="form-control">
+                    <select name="game" class="form-control">
+                        <option value="0"> Select a game</option>
                         @foreach( $games as $g)
                             <option value="{{ $g->id }}">{{ $g->name }}</option>
                         @endforeach
@@ -45,25 +46,23 @@
                     </div>
                 </div>
 
+
                 <div class="form-group">
                     <label>Who won?</label>
                     <option value="0">Select a Winner</option>
                     <select id="winner" class="form-control">
-
                     </select>
                 </div>
-
-
             </div>
 
         </div>
     </div>
 </div>
 
-<div class="row">
+<div class="row" id="scoretable">
     <div class="col-md-12">
         <div class="panel panel-default">
-            <div class="panel-heading">Player Details</div>
+            <div class="panel-heading">Player Scores</div>
             <div class="panel-body">
                 <div class="form-group" id="scores"></div>
             </div>
@@ -80,7 +79,21 @@
 <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
 <script>
     $( document ).ready(function() {
-       $( "#sortable1").sortable({
+
+        $("select[name='game']").on("change", function(){
+            var game = $(this).val();
+            $.get( "{{ action('GameController@getGamedata' )}}" + '/' + game, function( data ) {
+                console.log( data );
+
+                if(data.scorable == 0){
+                    $("#scoretable").hide();
+                } else{
+                    $("#scoretable").show();
+                }
+            });
+        });
+       
+        $( "#sortable1").sortable({
           cursor: "move",
           connectWith: ".connectedSortable",
           receive: function(event, u){
@@ -94,17 +107,13 @@
             '</div></div>'
 
             $("#scores").append(innerhtml)
-
             $("#winner").append('<option value="' + id + '">' + name + '</option>')
           },
           remove: function(event, u){
             var id = $(u.item).data("id");
             console.log(id);
-
             $('div.player-detail-' + id).remove();
             $('#winner option[value="' + id + '"]').remove();
-
-        
           }
           
         }).disableSelection();

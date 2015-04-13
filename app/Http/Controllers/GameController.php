@@ -22,8 +22,24 @@ class GameController extends Controller {
     }
 
     public function getShow($id){
-
+        return view('game.detail')->with(['game' => Game::find($id) ]);
     }
+
+    public function postShow($id){
+        print_r( Request::all() );
+        $game = Game::find($id);
+        $game->name = Request::input('name');
+
+        if(Request::has('score')){
+            $game->scorable = 1;
+        } else{
+            $game->scorable = 0;
+        }
+        $game->save();
+
+        return redirect()->action('GameController@getShow', $id);
+    }
+
 
     public function getAdd(){
 
@@ -49,6 +65,12 @@ class GameController extends Controller {
         }
 
         return redirect()->action('GameController@getList');
+    }
+
+    public function getGamedata($id){
+        $game = Game::find($id);
+
+        return response()->json($game);
     }
 
 }
