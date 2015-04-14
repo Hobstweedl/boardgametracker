@@ -69,6 +69,10 @@
         </div>
     </div>
 </div>
+<div id="hidden">   </div>
+
+<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+<input type="submit" value="add play" class="btn btn-primary">
 
 </form>
 
@@ -99,6 +103,8 @@
           receive: function(event, u){
             var li = u.item;
             var id = $(li).data("id");
+            $("#hidden").append('<input type="hidden" name="player[]" value="' 
+                + id + '" class="p-' + id + '">');
             var name = li[0].firstChild.data;
             var innerhtml = '<div class="row score-input player-detail-' + id + '" > <div class="col-md-3">' + 
             '<label style="width: 200px;">' + name + '<label>' +
@@ -111,6 +117,7 @@
           },
           remove: function(event, u){
             var id = $(u.item).data("id");
+            $(".p-" + id).remove();
             console.log(id);
             $('div.player-detail-' + id).remove();
             $('#winner option[value="' + id + '"]').remove();

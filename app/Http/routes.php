@@ -33,8 +33,16 @@ Route::get('players', function(){
     print_r($players);
 });
 
+Route::get('wtf', function(){
+	return 'wtf';
+});	
+
 Route::get('gameplay', function(){
     return view('gameplay')->with(['games' => Game::all(), 'players' => Player::all() ]);
+});
+
+Route::post('gameplay', function(){
+	print_r( Request::all() );
 });
 
 Route::controller('users', 'UserController');
