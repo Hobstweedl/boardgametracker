@@ -50,7 +50,7 @@
                 <div class="form-group">
                     <label>Who won?</label>
                     <option value="0">Select a Winner</option>
-                    <select id="winner" class="form-control">
+                    <select id="winner" name="winner" class="form-control">
                     </select>
                 </div>
             </div>

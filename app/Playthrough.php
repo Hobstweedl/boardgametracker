@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Gameplay extends Model{
+class Playthrough extends Model{
 
     public $timestamps = false;
 
