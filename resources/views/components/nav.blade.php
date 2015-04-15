@@ -7,9 +7,23 @@
                 
                     
                     <li>
-                        <a  href="index.html"><i class="fa fa-dashboard fa-3x"></i> Dashboard</a>
+                        <a  href="index.html"><i class="fa fa-fa-puzzle-piece fa-3x"></i> Dashboard</a>
                     </li>
-                      <li>
+
+                    <li>
+                        <a  href="#"><i class="fa fa-puzzle-piece fa-3x"></i> Games Played<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+                            <li>
+                                <a href="{{ action('PlaythroughController@getIndex')}}">Show Games Played</a>
+                            </li>
+                            <li>
+                                <a href="{{ action('PlaythroughController@getIndex')}}">Add Playthrough</a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+                    <li>
                         <a  href="#"><i class="fa fa-gamepad fa-3x"></i> Games<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
                             <li>

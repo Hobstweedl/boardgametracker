@@ -28,6 +28,16 @@
                     </select>
                 </div>
 
+                <div class="form-group">
+                    <label>When did you play it?</label>
+                    <input class="form-control" type="text" name="date" >
+                </div>
+
+                <div class="form-group">
+                    <label>Any notes about the game?</label>
+                    <textarea class="form-control" name="notes"></textarea>
+                </div>
+
                 <div class="row">
                     <div class="col-md-12">
                         <label>Who Played?</label>
@@ -69,7 +79,7 @@
         </div>
     </div>
 </div>
-<div id="hidden">   </div>
+<div id="hidden"></div>
 
 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 <input type="submit" value="add play" class="btn btn-primary">
@@ -83,6 +93,8 @@
 <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
 <script>
     $( document ).ready(function() {
+
+        $("input[name='date']").datepicker();
 
         $("select[name='game']").on("change", function(){
             var game = $(this).val();
