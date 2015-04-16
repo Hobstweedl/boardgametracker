@@ -28,12 +28,15 @@
                 </thead>
                 
                 <tbody>
-                    <tr>
-                        <td>Gravewell</td>
-                        <td>Sam Lodise</td>
-                        <td>Beginner Luck</td>
-                        <td>2015-04-08</td>
-                    </tr>
+                    @foreach($plays as $p)
+                    {{ print_r($p) }}
+                        <tr>
+                            <td>{{ $p->game->name }}</td>
+                            <td>{{ $p->players }}</td>
+                            <td>{{ $p->notes }}</td>
+                            <td>sdfsdf</td>
+                        </tr>
+                    @endforeach
                 </tbody>
                 
                 </table>

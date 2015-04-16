@@ -2,6 +2,7 @@
 
 use Request;
 use App\Game;
+use App\Playthrough;
 
 class PlaythroughController extends Controller {
 
@@ -17,7 +18,8 @@ class PlaythroughController extends Controller {
     }
 
     public function getList(){
-        return view('playthrough.list');
+        $g = Playthrough::with(['players', 'game'])->get();
+        return view('playthrough.list')->with(['plays' => $g]);
     }
 
     public function getShow($id){
