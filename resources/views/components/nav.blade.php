@@ -14,10 +14,10 @@
                         <a  href="#"><i class="fa fa-puzzle-piece fa-3x"></i> Games Played<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
                             <li>
-                                <a href="{{ action('PlaythroughController@getIndex')}}">Show Games Played</a>
+                                <a href="{{ action('PlaythroughController@getList')}}">Show Games Played</a>
                             </li>
                             <li>
-                                <a href="{{ action('PlaythroughController@getIndex')}}">Add Playthrough</a>
+                                <a href="{{ action('PlaythroughController@getAdd')}}">Add Playthrough</a>
                             </li>
                         </ul>
                     </li>

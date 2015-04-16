@@ -2,6 +2,12 @@
 
 @section('content')
 
+<style>
+
+.clickable-row:hover{cursor:pointer;}
+
+</style>
+
 <div class="row">
     <div class="col-md-12">
         <h2>Games Played<h2>
@@ -9,43 +15,30 @@
 </div>
 
 <div class="row">
-
     <div class="col-md-12">
         <div class="panel panel-default">
-            
             <div class="panel-heading">
-                Games Played
+                Views
             </div>
-
             <div class="panel-body">
-                <table class="table table-striped table-bordered">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#table" data-toggle="tab">Table Display</a></li>
+                    <li class=""><a href="#blocks" data-toggle="tab">Fancy</a></li>  
+                </ul>
 
-                <thead>
-                    <th>Game</th>
-                    <th>Winner</th>
-                    <th>Notes</th>
-                    <th>Date Played</th>
-                </thead>
-                
-                <tbody>
-                    @foreach($plays as $p)
-                    {{ print_r($p) }}
-                        <tr>
-                            <td>{{ $p->game->name }}</td>
-                            <td>{{ $p->players }}</td>
-                            <td>{{ $p->notes }}</td>
-                            <td>sdfsdf</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-                
-                </table>
+                <div class="tab-content">
+                    <div class="tab-pane fade active in" id="table">
+                        <br>
+                        @include('playthrough.table', ['plays' => $plays])
+                    </div>
+                    <div class="tab-pane fade" id="blocks">
+                        <br>
+                        @include('playthrough.blocks', ['plays' => $plays])
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-            
-</div>
-    
 </div>
 
 @stop
@@ -55,7 +48,9 @@
 
 <script>
     $( document ).ready(function() {
-        
+         $(".clickable-row").click(function() {
+            window.document.location = $(this).data("href");
+        });
 
     });
 </script>

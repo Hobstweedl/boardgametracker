@@ -59,8 +59,10 @@
 
                 <div class="form-group">
                     <label>Who won?</label>
-                    <option value="0">Select a Winner</option>
+                    
                     <select id="winner" name="winner" class="form-control">
+                        <option value="0">Select a Winner</option>
+                        <option value="-1"> Nobody Won</option>
                     </select>
                 </div>
             </div>
