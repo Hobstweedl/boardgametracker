@@ -53,6 +53,7 @@ class UserController extends Controller {
             })->save($d);
             
         }
+        
         return redirect()->action('UserController@getShow', $id);
 
     }

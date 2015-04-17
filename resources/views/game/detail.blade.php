@@ -37,10 +37,27 @@
 
                 <div class="form-group">
                     <label for="image">Upload an Image</label>
-                    <input type="file" name="photo">
+                    <input type="file" name="photo" id="file">
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                    <h4>Current Picture</h4>
+                        <img src="{{asset('games/'.camel_case($game->name).'.jpg') }}" height="225">
+                    </div>
+                    <div class="col-md-6" style="background-color: #eee">
+                        <h4>New Picture</h4>
+                        <img class="img-responsive" id="preview" height="225">
+                    </div>
                 </div>
 
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="offsetx" value="0">
+                <input type="hidden" name="offsety" value="0">
+                <input type="hidden" name="height" value="0">
+                <input type="hidden" name="width" value="0">
+                
+                <hr>
 
                 <button type="submit" class="btn btn-primary">Add Game</button>
             </form>
@@ -54,8 +71,32 @@
 <script>
     $( document ).ready(function() {
         
+        $( '#file' ).on( "change", function() {
+            console.log('file updated');
+            var fr = new FileReader();
+            fr.readAsDataURL(document.getElementById("file").files[0]);
 
+            fr.onload = function(ev){
+                document.getElementById("preview").src= ev.target.result; 
+                var $cropped = $('div > img#preview').cropper({
+                    aspectRatio: 1 / 1,
+                    strict: false,
+                    guides: false,
+                    highlight: false,
+                    movable: true,
+                    minCropBoxWidth: 400,
 
+                    crop: function(data) {
+                        console.log(data);
+                        $( "input[name=offsetx]" ).val(data.x);
+                        $( "input[name=offsety]" ).val(data.y);
+                        $( "input[name=height]" ).val(data.height);
+                        $( "input[name=width]" ).val(data.width);
+                    }
+                });
+            }
+
+        });
     });
 </script>
 

@@ -46,7 +46,9 @@
 
 <script>
     $( document ).ready(function() {
-        
+        $.get( "http://rolodex.arcadia.edu/person/jes", function( data ) {
+                  console.log(data);
+            });
 
 
     });

@@ -2,7 +2,7 @@
 
 use Request;
 use App\Game;
-use App\ImageResize;
+use Image;
 
 class GameController extends Controller {
 
@@ -30,12 +30,33 @@ class GameController extends Controller {
         $game = Game::find($id);
         $game->name = Request::input('name');
 
+        $width = round( Request::input('width'), 0);
+        $height = round( Request::input('height'), 0);
+        $offsetx = round( Request::input('offsetx'), 0);
+        $offsety = round( Request::input('offsety'), 0);
+
         if(Request::has('score')){
             $game->scorable = 1;
         } else{
             $game->scorable = 0;
         }
         $game->save();
+
+        if( Request::hasFile('photo')){
+
+            $photo = Request::file('photo');
+            $d = 'games'.DIRECTORY_SEPARATOR.camel_case(Request::input('name')).'.jpg';
+
+            Image::make($photo)->crop(
+                $width,
+                $height,
+                $offsetx,
+                $offsety
+            )->resize(400, null, function($c){
+                $c->aspectRatio();
+            })->save($d);
+            
+        }
 
         return redirect()->action('GameController@getShow', $id);
     }

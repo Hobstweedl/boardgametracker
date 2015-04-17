@@ -376,6 +376,9 @@ line-height: 1.428571429;
    
 }
 
+
+/* Card Styles */
+
 .flip-card{
     height: 400px; 
     background-size:100%;
@@ -384,6 +387,18 @@ line-height: 1.428571429;
 .flip-card .back{
     background-color: #eee;
 }
+
+.box-card{}
+
+.box-card .front{
+  opacity: 0.4;
+}
+
+.abs-pos{position:relative; bottom: 220px;}
+
+/*
+
+Drag and Drop Components for Gameplay Add */
 
 .listed-sortable{
     border: 1px solid #eee;
