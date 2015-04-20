@@ -4,6 +4,7 @@ use Request;
 use App\Game;
 use App\Player;
 use App\Playthrough;
+use App\Participant;
 
 class PlaythroughController extends Controller {
 
@@ -49,10 +50,17 @@ class PlaythroughController extends Controller {
         $players = Request::input('player');
 
         if($game->scorable == 1){
-            
-            //  Functionality for scoring
-            //  Need to iterate through the inputs with the scores
-            //  that have come in the request
+
+
+            foreach($players as $player){
+                $newplayer = Participant::create([
+                    'game_id' => $game->id,
+                    'player_id' => $player,
+                    'playthrough_id' => $playthrough_id,
+                    'score' => Request::input('person-'.$player)
+
+                ]);
+            }
 
         } else{
             foreach($players as $player){

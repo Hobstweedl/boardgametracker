@@ -61,7 +61,7 @@
             fr.onload = function(ev){
                 document.getElementById("preview").src= ev.target.result; 
                 var $cropped = $('div > img').cropper({
-                    aspectRatio: 16 / 9,
+                    aspectRatio: 1 / 1,
                     strict: false,
                     guides: false,
                     highlight: false,

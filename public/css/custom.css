@@ -394,7 +394,12 @@ line-height: 1.428571429;
   opacity: 0.4;
 }
 
-.abs-pos{position:relative; bottom: 220px;}
+.abs-pos{position:relative; bottom: 280px;}
+.abs-pos h3{ margin:10px 0px;}
+.abs-pos p{
+  margin: 0; padding: 0;
+}
+img.winner-profile{ width: 40%; margin: 0 auto;}
 
 /*
 
@@ -440,4 +445,6 @@ Drag and Drop Components for Gameplay Add */
   }
 
   .score-input{ margin-bottom: 20px;}
+
+
 

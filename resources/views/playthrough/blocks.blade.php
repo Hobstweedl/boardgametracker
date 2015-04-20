@@ -8,9 +8,16 @@
                 </div>
 
                 <div class="back abs-pos">
-                    @foreach($p->players as $i)
-                        <img src="{{asset('people/'.$i->player_id.'.jpg') }}" class="img-circle" width="50">
-                    @endforeach
+                    <div class="row text-center">
+                    <div class="col-md-12">
+                        <img src="{{asset('people/'.$p->winner->id.'.jpg') }}" class="img-circle winner-profile">
+                        <h3>{{ $p->date_played }}</h3>
+                        @foreach($p->players as $i)
+                            <img src="{{asset('people/'.$i->player_id.'-thumbnail.jpg') }}" class="img-circle" width="50" height="50">
+                        @endforeach
+                    </div>
+                    </div>
+                
                 </div>
             </div>
         </div>

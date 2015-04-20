@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="row">
-    <img class="img-circle" src="{{asset('people/'.$player->id.'.jpg') }}" width="80" height="70" >
+    <!--<img class="img-circle" src="{{asset('people/'.$player->id.'.jpg') }}" width="80" height="70" > -->
     <div class="col-md-2">
         <h2>{{$player->name}}</h2>   
     </div>
@@ -34,11 +34,15 @@
                 <div class="row">
                     <div class="col-md-6">
                     <h4>Current Picture</h4>
-                        <img src="{{asset('people/'.$player->id.'.jpg') }}" height="225">
+                        <img src="{{asset('people/'.$player->id.'.jpg') }}" >
                     </div>
-                    <div class="col-md-6" style="background-color: #eee">
+                </div>
+                <br>
+
+                <div class="row">
+                    <div class="col-md-12" style="background-color: #eee">
                         <h4>New Picture</h4>
-                        <img class="img-responsive" id="preview" height="225">
+                        <img class="img-responsive" id="preview" >
                     </div>
                 </div>
 

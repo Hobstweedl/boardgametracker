@@ -51,6 +51,15 @@ class UserController extends Controller {
             )->resize(400, null, function($c){
                 $c->aspectRatio();
             })->save($d);
+
+            Image::make($photo)->crop(
+                $width,
+                $height,
+                $offsetx,
+                $offsety
+        )->resize(50, 50, function($c){
+                $c->aspectRatio();
+            })->save( 'people'.DIRECTORY_SEPARATOR.$player->id.'-thumbnail.'.$photo->getClientOriginalExtension() );
             
         }
         
