@@ -25,7 +25,8 @@ class PlaythroughController extends Controller {
     }
 
     public function getShow($id){
-        return view('game.detail')->with(['game' => Game::find($id) ]);
+        $play = Playthrough::with(['players', 'game', 'winner'])->find($id);
+        return view('playthrough.detail')->with(['play' => $play ]);
     }
 
     public function getAdd(){

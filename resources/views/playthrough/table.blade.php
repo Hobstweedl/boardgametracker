@@ -14,7 +14,7 @@
         
         <tbody>
             @foreach($plays as $p)
-                <tr class='clickable-row' data-href="url://{{ action('PlaythroughController@getShow', $p->id )}} ">
+                <tr class='clickable-row' data-href="{{ action('PlaythroughController@getShow', $p->id )}} ">
                     <td>{{ $p->game->name }}</td>
                     <td>{{ $p->winner->name }}</td>
                     <td>{{ $p->notes }}</td>

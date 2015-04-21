@@ -3,7 +3,7 @@
 <head>
       <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Free Bootstrap Admin Template : Binary Admin</title>
+    <title>Boardgame Dashboard</title>
     <!-- BOOTSTRAP STYLES-->
     <link href="{{  asset('css/bootstrap.css')}}" rel="stylesheet" />
      <!-- FONTAWESOME STYLES-->
@@ -24,6 +24,7 @@
     <!-- METISMENU SCRIPTS -->
     <script src="{{  asset('js/jquery.metisMenu.js')}}"></script>
       <!-- CUSTOM SCRIPTS -->
+      <script src="http://code.highcharts.com/highcharts.js"></script>
     <script src="{{  asset('js/custom.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/0.9.1/cropper.min.js"></script>
 

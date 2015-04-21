@@ -7,7 +7,7 @@
                 
                     
                     <li>
-                        <a  href="index.html"><i class="fa fa-fa-puzzle-piece fa-3x"></i> Dashboard</a>
+                        <a  href="{{ action('PlaythroughController@getList')}}"><i class="fa fa-fa-puzzle-piece fa-3x"></i> Dashboard</a>
                     </li>
 
                     <li>

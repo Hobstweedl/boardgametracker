@@ -48,8 +48,11 @@
 
 <script>
     $( document ).ready(function() {
-         $(".clickable-row").click(function() {
-            window.document.location = $(this).data("href");
+         $(".clickable-row").on( "click", function() {
+            //alert('year');
+            var url = $(this).data("href");
+            console.log(url);
+            window.document.location = url;
         });
 
     });

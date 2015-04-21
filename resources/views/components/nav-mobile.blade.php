@@ -6,11 +6,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-            <a class="navbar-brand" href="index.html">Games</a> 
+            <a class="navbar-brand" href="{{ action('PlaythroughController@getList')}}">Games</a> 
         </div>
         <div style="color: white;
         padding: 15px 50px 5px 50px;
         float: right;
-        font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="login.html" class="btn btn-danger square-btn-adjust">Logout</a> 
+        font-size: 16px;"><a href="login.html" class="btn btn-danger square-btn-adjust">&nbsp;</a> 
     </div>
 </nav>  

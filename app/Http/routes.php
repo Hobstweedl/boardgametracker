@@ -16,9 +16,9 @@ use App\Game;
 use App\Playthrough;
 use App\Participant;
 
-Route::get('/', 'WelcomeController@index');
+Route::get('/', 'PlaythroughController@getList');
 
-Route::get('home', 'HomeController@index');
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
