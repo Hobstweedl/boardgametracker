@@ -9,6 +9,8 @@
 
         @yield('content')
 
+        @yield('charts')
+
     </div>
 </div>
 

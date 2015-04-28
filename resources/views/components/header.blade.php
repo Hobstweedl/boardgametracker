@@ -11,6 +11,7 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropper/0.9.1/cropper.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
         <!-- CUSTOM STYLES-->
     <link href="{{  asset('css/custom.css')}}" rel="stylesheet" />
 
@@ -29,6 +30,9 @@
       <script src="http://code.highcharts.com/highcharts.js"></script>
     <script src="{{  asset('js/custom.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/0.9.1/cropper.min.js"></script>
+
+
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 
 </head>
 <body>

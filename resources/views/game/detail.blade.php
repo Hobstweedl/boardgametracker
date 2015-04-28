@@ -68,8 +68,37 @@
     </div>
 </div>
 
+@stop
+
+@section('charts')
+
+<hr>
+
+<div class="ct-chart " id="chart"></div>
+
+@stop
+
+@section('scripts')
+
+
+
 <script>
+
     $( document ).ready(function() {
+
+        var data = {
+            labels: ['Bananas', 'Apples', 'Grapes'],
+            series: [30, 60, 10]
+        };
+
+        var sum = function(a, b) { return a + b };
+
+        var options = {
+          width: 900,
+          height: 900
+        };
+
+        new Chartist.Pie('.ct-chart', data, options);
         
         $( '#file' ).on( "change", function() {
             console.log('file updated');

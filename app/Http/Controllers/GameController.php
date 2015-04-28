@@ -26,7 +26,6 @@ class GameController extends Controller {
     }
 
     public function postShow($id){
-        print_r( Request::all() );
         $game = Game::find($id);
         $game->name = Request::input('name');
 
@@ -69,10 +68,19 @@ class GameController extends Controller {
     }
 
     public function postAdd(){
-        $destination = public_path().DIRECTORY_SEPARATOR .'games'.DIRECTORY_SEPARATOR ;
+
+        $width = round( Request::input('width'), 0);
+        $height = round( Request::input('height'), 0);
+        $offsetx = round( Request::input('offsetx'), 0);
+        $offsety = round( Request::input('offsety'), 0);
     
         $game = new Game;
         $game->name = Request::input('name');
+        if(Request::has('score')){
+            $game->scorable = 1;
+        } else{
+            $game->scorable = 0;
+        }
         $game->save();
         
         if( Request::hasFile('photo')){
