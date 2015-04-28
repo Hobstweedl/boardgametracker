@@ -5,6 +5,7 @@ use App\Game;
 use App\Player;
 use App\Playthrough;
 use App\Participant;
+use Helper;
 
 class PlaythroughController extends Controller {
 
@@ -20,6 +21,7 @@ class PlaythroughController extends Controller {
     }
 
     public function getList(){
+
         $g = Playthrough::with(['players', 'game', 'winner'])->get();
         return view('playthrough.list')->with(['plays' => $g]);
     }

@@ -1,0 +1,71 @@
+/* Card Styles */
+
+.flip-card{
+    height: 400px; 
+    background-size:100%;
+}
+
+.flip-card .front{background-color:white;}
+
+.flip-card .back{
+    background-color: #eee;
+}
+
+.box-card{}
+
+.opacity{
+  opacity: 0.4;
+
+}
+
+.abs-pos{position:relative; bottom: 368px; padding-top:10px; }
+.abs-pos h3{ margin:10px 0px;}
+.abs-pos p{
+  margin: 0; padding: 0;
+}
+img.winner-profile{ width: 40%; margin: 0 auto;}
+
+/*
+
+Drag and Drop Components for Gameplay Add */
+
+.listed-sortable{
+    border: 1px solid #eee;
+  width: 142px;
+  min-height: 20px;
+  list-style-type: none;
+  margin: 0;
+  padding: 5px 0 0 0;
+  float: left;
+  margin-right: 10px;
+}
+
+#sortable1, #sortable2 {
+    border: 1px solid #eee;
+    width: 100%;
+    min-height: 80px;
+    list-style-type: none;
+    margin: 0;
+    padding: 5px 0 0 0;
+    float: left;
+    margin-right: 10px;
+    background-color: #eee;
+  }
+
+  #sortable1{
+    padding:20px 0px;
+  }
+  #sortable1 li, #sortable2 li {
+    margin: 0 5px 5px 5px;
+    padding: 5px;
+    font-size: 1.2em;
+    width: 120px;
+  }
+  .connectedSortable li{
+    border: 1px solid #d3d3d3;
+  background: #C90000 50% 50% repeat-x;
+  font-weight: normal;
+  color: #fff;
+  }
+
+  .score-input{ margin-bottom: 20px;}

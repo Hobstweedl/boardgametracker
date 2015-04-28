@@ -77,12 +77,16 @@ class GameController extends Controller {
         
         if( Request::hasFile('photo')){
             $photo = Request::file('photo');
-            $photo->move($destination,camel_case($game->name).'.'.$photo->getClientOriginalExtension() );
-            $filename = $destination.camel_case($game->name).'.'.$photo->getClientOriginalExtension();
+            $d = 'games'.DIRECTORY_SEPARATOR.camel_case(Request::input('name')).'.jpg';
 
-            $image = new ImageResize( $filename );
-            $image->resizeToWidth(400);
-            $image->save('games/'.$game->name.'.jpg', IMAGETYPE_JPEG);
+            Image::make($photo)->crop(
+                $width,
+                $height,
+                $offsetx,
+                $offsety
+            )->resize(400, null, function($c){
+                $c->aspectRatio();
+            })->save($d);
         }
 
         return redirect()->action('GameController@getList');

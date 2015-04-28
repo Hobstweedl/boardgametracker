@@ -22,18 +22,18 @@
             </div>
             <div class="panel-body">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#table" data-toggle="tab">Table Display</a></li>
-                    <li class=""><a href="#blocks" data-toggle="tab">Fancy</a></li>  
+                    <li class="active"><a href="#blocks" data-toggle="tab">Fancy Display</a></li>
+                    <li class=""><a href="#table" data-toggle="tab">Table</a></li>  
                 </ul>
 
                 <div class="tab-content">
-                    <div class="tab-pane fade active in" id="table">
-                        <br>
-                        @include('playthrough.table', ['plays' => $plays])
-                    </div>
-                    <div class="tab-pane fade" id="blocks">
+                    <div class="tab-pane fade active in" id="blocks">
                         <br>
                         @include('playthrough.blocks', ['plays' => $plays])
+                    </div>
+                    <div class="tab-pane fade" id="table">
+                        <br>
+                        @include('playthrough.table', ['plays' => $plays])
                     </div>
                 </div>
             </div>
@@ -45,9 +45,14 @@
 
 @section('scripts')
 
+<script src="{{  asset('js/flip.js')}}"></script>
 
 <script>
+
+
     $( document ).ready(function() {
+        $(".flip-card").flip({ trigger: 'hover' })
+
          $(".clickable-row").on( "click", function() {
             //alert('year');
             var url = $(this).data("href");

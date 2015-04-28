@@ -14,6 +14,8 @@
         <!-- CUSTOM STYLES-->
     <link href="{{  asset('css/custom.css')}}" rel="stylesheet" />
 
+    <link href="{{ asset('css/more.css') }}" rel="stylesheet" />
+
      <!-- GOOGLE FONTS-->
    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 

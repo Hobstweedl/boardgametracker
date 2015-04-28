@@ -146,6 +146,7 @@ return [
 		'App\Providers\RouteServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
 		'Barryvdh\Debugbar\ServiceProvider',
+		'App\Providers\HelperServiceProvider'
 
 	],
 
@@ -195,6 +196,7 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
 		'Image' 	=> 'Intervention\Image\Facades\Image',
+		'Helper'	=> 'App\Facades\Helper',
 
 	],
 
