@@ -85,4 +85,5 @@ Route::post('gameplay', function(){
 Route::controller('users', 'UserController');
 Route::controller('games', 'GameController');
 Route::controller('playthroughs', 'PlaythroughController');
+Route::controller('data', 'DataController');
 

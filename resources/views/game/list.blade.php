@@ -34,10 +34,10 @@
 
 <script>
     $( document ).ready(function() {
-        
-        $(".flip-card").flip({ trigger: 'hover' })
 
-    });
+            $(".flip-card").flip({ trigger: 'hover' })
+
+        });
 </script>
 
 @stop

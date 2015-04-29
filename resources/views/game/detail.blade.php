@@ -73,8 +73,17 @@
 @section('charts')
 
 <hr>
+<div class="row">
+    <div class="col-md-6">
+        <div id="winchart"></div>
+    </div>
+    <div class="col-md-6">
+        <div id="statchart"></div>
+    </div>
+</div>
 
-<div class="ct-chart " id="chart"></div>
+
+
 
 @stop
 
@@ -86,19 +95,52 @@
 
     $( document ).ready(function() {
 
-        var data = {
-            labels: ['Bananas', 'Apples', 'Grapes'],
-            series: [30, 60, 10]
-        };
-
-        var sum = function(a, b) { return a + b };
-
         var options = {
-          width: 900,
-          height: 900
-        };
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+            },
+            title: {
+            },
+            tooltip: {
+                
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Player Win Percentages'
+            }]
+        }
 
-        new Chartist.Pie('.ct-chart', data, options);
+        var winurl = "{{ action('DataController@getGamewinstats' )}}/" + {{ $game->id }};
+        var statsurl = "{{ action('DataController@getGamestats' )}}/" + {{ $game->id }};
+
+        $.getJSON( winurl, function(data){
+            options.chart.renderTo = 'winchart'
+            options.title.text = 'Player Wins'
+            options.tooltip.pointFormat = '{series.name}: <b>{point.percentage:.1f}%</b>'
+            options.series[0].data = data;
+            var chart = new Highcharts.Chart(options);
+        });
+
+        $.getJSON( statsurl, function(data){
+            options.chart.renderTo = 'statchart';
+            options.title.text = 'Players'
+            options.series[0].data = data;
+            options.series[0].name = 'Player Frequency';
+            var chart = new Highcharts.Chart(options);
+        });
+
         
         $( '#file' ).on( "change", function() {
             console.log('file updated');
