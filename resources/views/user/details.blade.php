@@ -65,10 +65,80 @@
 
 @stop
 
+@section('charts')
+
+<hr>
+<div class="row">
+    <div class="col-md-6">
+        <div id="winchart"></div>
+    </div>
+    <div class="col-md-6">
+        <div id="statchart"></div>
+    </div>
+</div>
+
+
+
+
+@stop
+
 @section('scripts')
 
 <script>
     $( document ).ready(function() {
+
+        var options = {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+            },
+            title: {
+            },
+            tooltip: {
+                
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Times Played'
+            }]
+        }
+
+        var statsurl = "{{ action('DataController@getPlayerstats' )}}/" + {{ $player->id }};
+        var winurl = "{{ action('DataController@getPlayerwinstats' )}}/" + {{ $player->id }};
+
+        $.getJSON( statsurl, function(data){
+            console.log(data);
+            options.chart.renderTo = 'statchart'
+            options.title.text = 'Gameplays'
+            //options.tooltip.pointFormat = '{series.name}: <b>{point.percentage:.1f}%</b>'
+            options.series[0].data = data;
+            options.series[0].name = 'Times Played'
+            var chart = new Highcharts.Chart(options);
+        });
+
+        $.getJSON( winurl, function(data){
+            console.log(data);
+            options.chart.renderTo = 'winchart'
+            options.title.text = 'Game Wins'
+            options.tooltip.pointFormat = '{series.name}: <b>{point.percentage:.1f}%</b>'
+            options.series[0].data = data;
+            options.series[0].name = 'Game Wins'
+            var chart = new Highcharts.Chart(options);
+        });
+
+
+
         
         $( '#file' ).on( "change", function() {
             var fr = new FileReader();

@@ -9,6 +9,7 @@ class DataController extends Controller {
    /*
         Game totals -  Return every game played with total number of games played for it
         Game Stats - Return players that have played with times won for a single game
+        Game Win Stats - Return number of times player has won a game
         Player stats -  Return games that a player has played
 
 
@@ -21,6 +22,35 @@ class DataController extends Controller {
         
     }
 
+    public function getPlayerwinstats($id){
+        $response = [];
+        $stats = DB::select('select g.name as name, count(p.player_id) as count 
+                            from playthroughs p inner join games g on g.id =  p.game_id
+                            where p.player_id = ?
+                            group by g.name', [$id]);
+
+        foreach($stats as $s){
+            $response[] = [$s->name, (int) $s->count];
+        }
+
+        return Response::json( $response );
+    }
+
+    public function getPlayerstats($id){
+        $response = [];
+        $stats = DB::select('select g.name as name, count(p.playthrough_id) as count
+                            from participants p
+                            inner join games g on p.game_id = g.id
+                            where p.player_id = ?
+                            group by g.name', [$id]);
+
+        foreach($stats as $s){
+            $response[] = [$s->name, (int) $s->count];
+        }
+
+        return Response::json( $response );
+    }
+
     public function getGamewinstats($id){
 
         $response = [];
@@ -31,56 +61,27 @@ class DataController extends Controller {
         get([DB::raw('count(player_id) as plays'), 'players.name']);
 
         foreach($stats as $stat){
-            $response[] = [$stat->name, $stat->plays];
+            $response[] = [$stat->name, (int) $stat->plays];
         }
-
-        
-
 
         return Response::json($response);
 
     }
 
     public function getGamestats($id){
-
         $player = [];
         $response = [];
-        $stats = DB::table('participants')->
-        join('players', 'players.id', '=', 'participants.player_id')->
-        join('games', 'games.id', '=', 'participants.game_id')->
-        join('playthroughs', 'playthroughs.id', '=', 'participants.playthrough_id')->
-        where('participants.game_id', '=', $id)->
-        get(['participants.id', 'games.name as game_name','participants.game_id', 'participants.player_id', 'players.name as player_name', 'participants.playthrough_id', 'playthroughs.player_id as winner']);
+        $stats = DB::select('select pl.name as name, count(p.playthrough_id) as count
+                            from participants p
+                            inner join players pl on p.player_id = pl.id
+                            where p.game_id = ?
+                            group by pl.name', [$id]);
 
-        foreach($stats as $stat){
-            if( !array_key_exists($stat->player_id, $player) ){
-                $player[$stat->player_id]['count'] = 1;
-                $player[$stat->player_id]['name'] = $stat->player_name;
-            } else{
-                $player[$stat->player_id]['count'] ++;
-                
-            }
+        foreach($stats as $s){
+            $response[] = [$s->name, (int) $s->count];
         }
 
-        foreach ($player as $p){
-            $response[] = [$p['name'], $p['count'] ];
-        }
-
-        return Response::json($response);
-    }
-
-    public function getGameTotals(){
-
-        /*
-        foreach($stats as $stat){
-            if( !array_key_exists($stat->playthrough_id, $playthroughs) ){
-                $playthroughs[$stat->playthrough_id] = 1;
-            } else{
-                $playthroughs[$stat->playthrough_id] ++;
-            }
-        }
-        */
-
+        return Response::json( $response );
     }
 
 }

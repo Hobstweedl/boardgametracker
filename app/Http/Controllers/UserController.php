@@ -37,7 +37,6 @@ class UserController extends Controller {
         $offsetx = round( Request::input('offsetx'), 0);
         $offsety = round( Request::input('offsety'), 0);
         
-        
         if( Request::hasFile('photo')){
 
             $photo = Request::file('photo');
