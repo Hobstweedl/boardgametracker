@@ -21,8 +21,11 @@
                 </div>
 
                 <div class="back">
-                    <div class="col-md-12 " style="margin-top: 120px;">
-                        <p class="text-center">{{ $p->notes }} </p>
+                    <div class="col-md-12 player-score" style="margin-top: 30px;">
+                        @foreach($p->players as $i)
+                        <p>{{ $i->name }} - {{ $i->score }}</p>
+                        @endforeach
+                        <h3 class="text-center">{{ $p->notes }} </h3>
                     </div>
                     
                 </div>

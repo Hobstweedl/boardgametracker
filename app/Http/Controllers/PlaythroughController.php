@@ -22,7 +22,7 @@ class PlaythroughController extends Controller {
 
     public function getList(){
 
-        $g = Playthrough::with(['players', 'game', 'winner'])->get();
+        $g = Playthrough::with(['players', 'game', 'winner'])->orderBy('date_played', 'asc')->get();
         return view('playthrough.list')->with(['plays' => $g]);
     }
 
@@ -32,7 +32,10 @@ class PlaythroughController extends Controller {
     }
 
     public function getAdd(){
-        return view('gameplay')->with(['games' => Game::all(), 'players' => Player::all() ]);
+        return view('gameplay')->with(
+            ['games' => Game::orderBy('name', 'asc')->get(), 
+            'players' => Player::orderBy('name', 'asc')->get() 
+            ]);
     }
 
     public function postAdd(){
