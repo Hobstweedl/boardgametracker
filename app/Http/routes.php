@@ -16,7 +16,9 @@ use App\Game;
 use App\Playthrough;
 use App\Participant;
 
-Route::get('/', 'PlaythroughController@getList');
+Route::get('/', function(){
+    return view('components.dashboard');
+});
 
 
 
@@ -35,9 +37,6 @@ Route::get('players', function(){
     print_r($players);
 });
 
-Route::get('wtf', function(){
-	return 'wtf';
-});	
 
 Route::get('gameplay', function(){
     return view('gameplay')->with(['games' => Game::all(), 'players' => Player::all() ]);

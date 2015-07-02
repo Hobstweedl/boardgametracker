@@ -18,7 +18,7 @@ class GameController extends Controller {
     }
 
     public function getList(){
-        return view('game.list')->with(['games' => Game::all() ]);
+        return view('game.list')->with(['games' => Game::orderBy('name', 'asc')->get() ]);
     }
 
     public function getShow($id){

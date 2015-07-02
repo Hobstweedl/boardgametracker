@@ -87,38 +87,38 @@
 <script>
     $( document ).ready(function() {
 
-        var options = {
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false,
-            },
-            title: {
-            },
-            tooltip: {
-                
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: false
-                    },
-                    showInLegend: true
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: 'Times Played'
-            }]
-        }
+        
 
         var statsurl = "{{ action('DataController@getPlayerstats' )}}/" + {{ $player->id }};
         var winurl = "{{ action('DataController@getPlayerwinstats' )}}/" + {{ $player->id }};
 
         $.getJSON( statsurl, function(data){
-            console.log(data);
+            var options = {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                },
+                title: {
+                },
+                tooltip: {
+                    
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: false
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    type: 'pie',
+                    name: 'Times Played'
+                }]
+            }
             options.chart.renderTo = 'statchart'
             options.title.text = 'Gameplays'
             //options.tooltip.pointFormat = '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -128,13 +128,58 @@
         });
 
         $.getJSON( winurl, function(data){
+            
             console.log(data);
-            options.chart.renderTo = 'winchart'
-            options.title.text = 'Game Wins'
-            options.tooltip.pointFormat = '{series.name}: <b>{point.percentage:.1f}%</b>'
-            options.series[0].data = data;
-            options.series[0].name = 'Game Wins'
-            var chart = new Highcharts.Chart(options);
+
+            var chart = new Highcharts.Chart({
+                chart: {
+                    type: 'column',
+                    renderTo: 'winchart',
+                    events: {
+                        addSeries: function(){
+                            console.log('series added');
+                        }
+                    }
+                },
+                title: {
+                    text: 'Games Played'
+                },
+                xAxis: {
+                    categories: data[0]['data']
+                },
+
+                yAxis: {
+                    min: 0,
+                    allowDecimals: false,
+                    title: {
+                        text: 'Times Played'
+                    }
+                },
+                legend: {
+                    reversed: true
+                },
+                plotOptions: {
+                    series: {
+                        stacking: 'normal',
+                    }
+                },
+                series: [
+                    {
+                        name : data[1]['name'],
+                        data : data[1]['data']
+                    },
+                    {
+                        name : data[2]['name'],
+                        data : data[2]['data']
+                    },
+                ]
+            });
+            
+            console.log(chart.series);
+        
+            //wins.series[0] = data[1];
+            //wins.series[1] = data[2];
+
         });
 
 

@@ -27,12 +27,11 @@
     <!-- METISMENU SCRIPTS -->
     <script src="{{  asset('js/jquery.metisMenu.js')}}"></script>
       <!-- CUSTOM SCRIPTS -->
-      <script src="http://code.highcharts.com/highcharts.js"></script>
+      <script src="{{  asset('js/highcharts.js')}}"></script>
     <script src="{{  asset('js/custom.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropper/0.9.1/cropper.min.js"></script>
 
 
-    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 
 </head>
 <body>

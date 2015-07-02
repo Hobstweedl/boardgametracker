@@ -126,11 +126,39 @@
         var statsurl = "{{ action('DataController@getGamestats' )}}/" + {{ $game->id }};
 
         $.getJSON( winurl, function(data){
-            options.chart.renderTo = 'winchart'
-            options.title.text = 'Player Wins'
-            options.tooltip.pointFormat = '{series.name}: <b>{point.percentage:.1f}%</b>'
-            options.series[0].data = data;
-            var chart = new Highcharts.Chart(options);
+            var wins = {
+                chart: {
+                    type: 'bar',
+                    renderTo: 'winchart'
+                },
+                title: {
+                    text: 'Games Played'
+                },
+                xAxis: {
+                    categories: []
+                },
+
+                yAxis: {
+                    min: 0,
+                    allowDecimals: false,
+                    title: {
+                        text: 'Times Played'
+                    }
+                },
+                legend: {
+                    reversed: true
+                },
+                plotOptions: {
+                    series: {
+                        stacking: 'normal',
+                    }
+                },
+                series: []
+            }
+            wins.xAxis.categories = data[0]['data'];
+            wins.series[0] = data[1];
+            wins.series[1] = data[2];
+            var chart = new Highcharts.Chart(wins);
         });
 
         $.getJSON( statsurl, function(data){
