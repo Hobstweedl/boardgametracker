@@ -22,8 +22,8 @@ class PlaythroughController extends Controller {
 
     public function getList(){
 
-        $g = Playthrough::with(['players', 'game', 'winner'])->orderBy('date_played', 'asc')->get();
-        return view('playthrough.list')->with(['plays' => $g]);
+        $plays = Playthrough::with(['players', 'game', 'winner'])->orderBy('date_played', 'asc')->get();
+        return view('playthrough.list')->with(['plays' => $plays]);
     }
 
     public function getShow($id){

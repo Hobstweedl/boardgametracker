@@ -16,9 +16,9 @@ use App\Game;
 use App\Playthrough;
 use App\Participant;
 
-Route::get('/', function(){
+Route::get('/', ['as' => 'dashboard', function(){
     return view('components.dashboard');
-});
+}]);
 
 
 

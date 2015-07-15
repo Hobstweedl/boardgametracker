@@ -24,7 +24,7 @@
                         @endforeach
                     
                     </td>
-                    <td>{{ $p->date_played }}</td>
+                    <td>{{ Helper::prettyDate( $p->date_played ) }}</td>
                 </tr>
             @endforeach
         </tbody>

@@ -7,27 +7,14 @@ use File;
 
 class DataController extends Controller {
 
-   /*
-        Game totals -  Return every game played with total number of games played for it
-        Game Stats - Return players that have played with times won for a single game
-        Game Win Stats - Return number of times player has won a game
-        Player stats -  Return games that a player has played
-
-
-        Win percentage stats for a game showing all player wins
-        Win percentage stats for a player showing all games won/lost?
-        
-   */
     public function __construct()
     {
         
     }
 
     public function getPlayerwinstats($id){
-        $data = [['Games', 'Wins', 'Losses']];
-        $cat = ['Games'];
-        $plays = ['Losses'];
-        $wins = ['Wins'];
+      $data = [['Games', 'Wins', 'Losses']];
+    
        $stats = DB::select(DB::raw('
                    SELECT
        cast(SUM(CASE
@@ -47,13 +34,7 @@ class DataController extends Controller {
 
                foreach($stats as $s){
                 $data[] = [$s->name, (int) $s->wins, (int) ($s->plays - $s->wins)];
-                $cat[] = $s->name;
-                $plays[] = (int) $s->plays;
-                $wins[] = (int) $s->wins;
                }
-               //array_push($data, $cat);
-               //array_push($data, $plays);
-               //array_push($data, $wins);
 
                return Response::json( $data );
     }
@@ -109,7 +90,7 @@ class DataController extends Controller {
 
     public function getGamestats($id){
         $response = [['Player', 'Plays']];
-        
+
         $stats = DB::select('select pl.name as name, count(p.playthrough_id) as count
                             from participants p
                             inner join players pl on p.player_id = pl.id
