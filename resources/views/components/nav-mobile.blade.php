@@ -8,5 +8,5 @@
         </button>
             <a class="navbar-brand" href="{{ action('PlaythroughController@getList')}}">Games</a> 
         </div>
-    </div>
+        
 </nav>  

@@ -1,6 +1,6 @@
 /* Card Styles */
 
-.flip-card{
+.flip-card, .flip-cardd{
     height: 400px; 
     background-size:100%;
 }

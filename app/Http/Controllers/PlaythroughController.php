@@ -22,7 +22,7 @@ class PlaythroughController extends Controller {
 
     public function getList(){
 
-        $plays = Playthrough::with(['players', 'game', 'winner'])->orderBy('date_played', 'asc')->get();
+        $plays = Playthrough::with(['players', 'game', 'winner'])->orderBy('date_played', 'desc')->get();
         return view('playthrough.list')->with(['plays' => $plays]);
     }
 
