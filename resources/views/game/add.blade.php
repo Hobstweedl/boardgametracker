@@ -30,7 +30,7 @@
 
                 <div class="form-group">
                     <label for="image">Upload an Image</label>
-                    <input type="file" name="photo">
+                    <input type="file" name="photo" id="file">
                 </div>
 
                 <div class="form-group">

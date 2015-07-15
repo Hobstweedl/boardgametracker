@@ -93,110 +93,88 @@
 
 <script>
 
-    $( document ).ready(function() {
 
+google.load('visualization', '1', {packages: ['corechart', 'bar']});
+google.setOnLoadCallback(chartInit);
+
+function chartInit(){
+    drawWinChart();
+    drawPieChart();
+}
+
+
+function drawWinChart(){
+    var winurl = "{{ action('DataController@getGamewinstats' )}}/" + {{ $game->id }};
+    $.getJSON( winurl, function(stats){
+        console.log(stats);
+    var data = new google.visualization.arrayToDataTable(stats);
+    
+    var options = {
+        title: 'Games Played',
+        height: 800,
+        width: '100%',
+        colors: ['#b0120a', '#ffab91'],
+        legend: { position: 'top'},
+        bar: { groupWidth: '75%' },
+        hAxis:{
+            minValue: 0
+        },
+        isStacked: 'true'
+    };
+
+    var chart = new google.visualization.BarChart(document.getElementById('winchart'));
+    chart.draw(data, options);
+    
+    });
+}
+
+function drawPieChart(){
+    var statsurl = "{{ action('DataController@getGamestats' )}}/" + {{ $game->id }};
+
+    $.getJSON( statsurl, function(stats){
+        var data = google.visualization.arrayToDataTable( stats);
+      
         var options = {
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false,
-            },
-            title: {
-            },
-            tooltip: {
-                
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: false
-                    },
-                    showInLegend: true
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: 'Player Win Percentages'
-            }]
+            title: 'Win Frequency',
+            pieHole: 0.4,
+            height: 800
         }
+        var chart = new google.visualization.PieChart(document.getElementById('statchart'));
+        chart.draw(data, options);
 
-        var winurl = "{{ action('DataController@getGamewinstats' )}}/" + {{ $game->id }};
-        var statsurl = "{{ action('DataController@getGamestats' )}}/" + {{ $game->id }};
+    });
+}
 
-        $.getJSON( winurl, function(data){
-            var wins = {
-                chart: {
-                    type: 'bar',
-                    renderTo: 'winchart'
-                },
-                title: {
-                    text: 'Games Played'
-                },
-                xAxis: {
-                    categories: []
-                },
-
-                yAxis: {
-                    min: 0,
-                    allowDecimals: false,
-                    title: {
-                        text: 'Times Played'
-                    }
-                },
-                legend: {
-                    reversed: true
-                },
-                plotOptions: {
-                    series: {
-                        stacking: 'normal',
-                    }
-                },
-                series: []
-            }
-            wins.xAxis.categories = data[0]['data'];
-            wins.series[0] = data[1];
-            wins.series[1] = data[2];
-            var chart = new Highcharts.Chart(wins);
-        });
-
-        $.getJSON( statsurl, function(data){
-            options.chart.renderTo = 'statchart';
-            options.title.text = 'Players'
-            options.series[0].data = data;
-            options.series[0].name = 'Player Frequency';
-            var chart = new Highcharts.Chart(options);
-        });
+$( document ).ready(function() {
 
         
-        $( '#file' ).on( "change", function() {
-            console.log('file updated');
-            var fr = new FileReader();
-            fr.readAsDataURL(document.getElementById("file").files[0]);
+    $( '#file' ).on( "change", function() {
+        console.log('file updated');
+        var fr = new FileReader();
+        fr.readAsDataURL(document.getElementById("file").files[0]);
 
-            fr.onload = function(ev){
-                document.getElementById("preview").src= ev.target.result; 
-                var $cropped = $('div > img#preview').cropper({
-                    aspectRatio: 1 / 1,
-                    strict: false,
-                    guides: false,
-                    highlight: false,
-                    movable: true,
-                    minCropBoxWidth: 400,
+        fr.onload = function(ev){
+            document.getElementById("preview").src= ev.target.result; 
+            var $cropped = $('div > img#preview').cropper({
+                aspectRatio: 1 / 1,
+                strict: false,
+                guides: false,
+                highlight: false,
+                movable: true,
+                minCropBoxWidth: 400,
 
-                    crop: function(data) {
-                        console.log(data);
-                        $( "input[name=offsetx]" ).val(data.x);
-                        $( "input[name=offsety]" ).val(data.y);
-                        $( "input[name=height]" ).val(data.height);
-                        $( "input[name=width]" ).val(data.width);
-                    }
-                });
-            }
+                crop: function(data) {
+                    console.log(data);
+                    $( "input[name=offsetx]" ).val(data.x);
+                    $( "input[name=offsety]" ).val(data.y);
+                    $( "input[name=height]" ).val(data.height);
+                    $( "input[name=width]" ).val(data.width);
+                }
+            });
+        }
 
-        });
     });
+});
 </script>
 
 @stop

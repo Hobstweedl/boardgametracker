@@ -85,104 +85,61 @@
 @section('scripts')
 
 <script>
+
+google.load('visualization', '1', {packages: ['corechart', 'bar']});
+google.setOnLoadCallback(chartInit);
+
+function chartInit(){
+    drawWinChart();
+    drawPieChart();
+}
+
+function drawWinChart(){
+    var winurl = "{{ action('DataController@getPlayerwinstats' )}}/" + {{ $player->id }};
+    $.getJSON( winurl, function(stats){
+        console.log(stats);
+    var data = new google.visualization.arrayToDataTable(stats);
+    
+    var options = {
+        title: 'Game Plays',
+        height: 800,
+        width: '100%',
+        colors: ['#b0120a', '#ffab91'],
+        legend: { position: 'top'},
+        bar: { groupWidth: '75%' },
+        hAxis:{
+            minValue: 0
+        },
+        isStacked: 'true'
+    };
+
+    var chart = new google.visualization.BarChart(document.getElementById('winchart'));
+    chart.draw(data, options);
+    
+    //google.setOnLoadCallback(drawDualX);
+    });
+}
+
+function drawPieChart(){
+    var statsurl = "{{ action('DataController@getPlayerstats' )}}/" + {{ $player->id }};
+
+    $.getJSON( statsurl, function(stats){
+        var data = google.visualization.arrayToDataTable( stats);
+      
+        var options = {
+            title: 'Game Frequency',
+            pieHole: 0.4,
+            height: 800
+        }
+        var chart = new google.visualization.PieChart(document.getElementById('statchart'));
+        chart.draw(data, options);
+
+    });
+}
+
     $( document ).ready(function() {
-
-        
-
-        var statsurl = "{{ action('DataController@getPlayerstats' )}}/" + {{ $player->id }};
-        var winurl = "{{ action('DataController@getPlayerwinstats' )}}/" + {{ $player->id }};
-
-        $.getJSON( statsurl, function(data){
-            var options = {
-                chart: {
-                    plotBackgroundColor: null,
-                    plotBorderWidth: null,
-                    plotShadow: false,
-                },
-                title: {
-                },
-                tooltip: {
-                    
-                },
-                plotOptions: {
-                    pie: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        dataLabels: {
-                            enabled: false
-                        },
-                        showInLegend: true
-                    }
-                },
-                series: [{
-                    type: 'pie',
-                    name: 'Times Played'
-                }]
-            }
-            options.chart.renderTo = 'statchart'
-            options.title.text = 'Gameplays'
-            //options.tooltip.pointFormat = '{series.name}: <b>{point.percentage:.1f}%</b>'
-            options.series[0].data = data;
-            options.series[0].name = 'Times Played'
-            var chart = new Highcharts.Chart(options);
-        });
-
-        $.getJSON( winurl, function(data){
-            
-            console.log(data);
-
-            var chart = new Highcharts.Chart({
-                chart: {
-                    type: 'column',
-                    renderTo: 'winchart',
-                    events: {
-                        addSeries: function(){
-                            console.log('series added');
-                        }
-                    }
-                },
-                title: {
-                    text: 'Games Played'
-                },
-                xAxis: {
-                    categories: data[0]['data']
-                },
-
-                yAxis: {
-                    min: 0,
-                    allowDecimals: false,
-                    title: {
-                        text: 'Times Played'
-                    }
-                },
-                legend: {
-                    reversed: true
-                },
-                plotOptions: {
-                    series: {
-                        stacking: 'normal',
-                    }
-                },
-                series: [
-                    {
-                        name : data[1]['name'],
-                        data : data[1]['data']
-                    },
-                    {
-                        name : data[2]['name'],
-                        data : data[2]['data']
-                    },
-                ]
-            });
-            
-            console.log(chart.series);
-        
-            //wins.series[0] = data[1];
-            //wins.series[1] = data[2];
-
-        });
-
-
+  
+       
 
         
         $( '#file' ).on( "change", function() {

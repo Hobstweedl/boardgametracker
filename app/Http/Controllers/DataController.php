@@ -24,10 +24,10 @@ class DataController extends Controller {
     }
 
     public function getPlayerwinstats($id){
-        $data = [];
-        $cat = ['name' => 'Games'];
-        $plays = ['name' => 'Losses'];
-        $wins = ['name' => 'Wins'];
+        $data = [['Games', 'Wins', 'Losses']];
+        $cat = ['Games'];
+        $plays = ['Losses'];
+        $wins = ['Wins'];
        $stats = DB::select(DB::raw('
                    SELECT
        cast(SUM(CASE
@@ -46,22 +46,20 @@ class DataController extends Controller {
 
 
                foreach($stats as $s){
-                $cat['data'][] = $s->name;
-                $plays['data'][] = $s->plays;
-                $wins['data'][] = $s->wins;
+                $data[] = [$s->name, (int) $s->wins, (int) ($s->plays - $s->wins)];
+                $cat[] = $s->name;
+                $plays[] = (int) $s->plays;
+                $wins[] = (int) $s->wins;
                }
-               array_push($data, $cat);
-               array_push($data, $plays);
-               array_push($data, $wins);
-
-               $myjson = json_encode($data);
-               $bytes = File::put('api.json', $myjson);
+               //array_push($data, $cat);
+               //array_push($data, $plays);
+               //array_push($data, $wins);
 
                return Response::json( $data );
     }
 
     public function getPlayerstats($id){
-        $response = [];
+        $response = [['Game', 'Plays']];
         $stats = DB::select('select g.name as name, count(p.playthrough_id) as count
                             from participants p
                             inner join games g on p.game_id = g.id
@@ -82,11 +80,9 @@ class DataController extends Controller {
 
     public function getGamewinstats($id){
 
-         $data = [];
-        $cat = ['name' => 'Players'];
-        $plays = ['name' => 'Losses'];
-        $wins = ['name' => 'Wins'];
-       $stats = DB::select(DB::raw('
+      $data = [['Games', 'Wins', 'Losses']];
+    
+      $stats = DB::select(DB::raw('
                     SELECT
        cast(SUM(CASE
        WHEN pt.player_id IS NULL THEN 0
@@ -103,22 +99,17 @@ class DataController extends Controller {
        GROUP BY p.id, p.name'), [$id]);
 
 
-               foreach($stats as $s){
-                $cat['data'][] = $s->name;
-                $plays['data'][] = $s->plays;
-                $wins['data'][] = $s->wins;
-               }
-               array_push($data, $cat);
-               array_push($data, $plays);
-               array_push($data, $wins);
+      foreach($stats as $s){
+        $data[] = [$s->name, (int) $s->wins, (int) ($s->plays - $s->wins)];
+      }
 
-               return Response::json( $data );
+      return Response::json( $data );
 
     }
 
     public function getGamestats($id){
-        $player = [];
-        $response = [];
+        $response = [['Player', 'Plays']];
+        
         $stats = DB::select('select pl.name as name, count(p.playthrough_id) as count
                             from participants p
                             inner join players pl on p.player_id = pl.id
