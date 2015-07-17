@@ -25,7 +25,7 @@ background-color: rgba(32, 32, 32, 0.5);
 }
 
 .rankings{
-  width: 25px;
+  width: 35px;
 }
 .rank-1{
   box-shadow: 0px 0px 15px 2px #FFD700;
@@ -104,6 +104,15 @@ Drag and Drop Components for Gameplay Add */
   font-weight: normal;
   color: #fff;
   }
+
+  .score{
+    /*display:none; */
+    position: relative; font-size: 26px;
+  }
+
+  .score-1{ bottom: 70px;}
+  .score-2{ bottom: 50px;}
+  .score-3{ bottom: 45px;}
 
   .score-input{ margin-bottom: 20px;}
 
