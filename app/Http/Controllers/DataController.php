@@ -115,4 +115,118 @@ class DataController extends Controller {
         return Response::json($stats);
     }
 
+    public function getStatdayofweekbyplayer(){
+      //  here
+
+      $stats = DB::select("
+          SELECT
+              player_id, name, MAX(count_of_days) AS wins, day_of_week
+          FROM
+              (SELECT
+                  pt.player_id,
+                      p.name,
+                      COUNT(pt.player_id) AS count_of_days,
+                      CASE DAYOFWEEK(pt.date_played)
+                          WHEN 1 THEN 'Sunday'
+                          WHEN 2 THEN 'Monday'
+                          WHEN 3 THEN 'Tuesday'
+                          WHEN 4 THEN 'Wednesday'
+                          WHEN 5 THEN 'Thursday'
+                          WHEN 6 THEN 'Friday'
+                          WHEN 7 THEN 'Saturday'
+                      END AS day_of_week
+              FROM
+                  playthroughs pt
+              INNER JOIN players p ON pt.player_id = p.id
+              GROUP BY pt.player_id , p.name , day_of_week
+              ORDER BY count_of_days DESC) sq1
+          GROUP BY player_id , name
+          ORDER BY wins DESC
+        ");
+
+      return Response::json($stats);
+    }
+
+    public function getStatoverallwin(){
+
+      $stats = DB::select("
+        SELECT
+            ROUND((SUM(CASE
+                        WHEN pt.player_id IS NULL THEN 0
+                        ELSE 1
+                    END) / COUNT(pr.player_id)) * 100,
+                    2) AS win_pct,
+            pl.name,
+            pl.id,
+            COUNT(pr.player_id) AS plays,
+            COUNT(pt.player_id) AS wins
+        FROM
+            participants pr
+                LEFT JOIN
+            playthroughs pt ON (pr.playthrough_id = pt.id
+                AND pr.player_id = pt.player_id)
+                INNER JOIN
+            playthroughs pt1 ON pr.playthrough_id = pt1.id
+                INNER JOIN
+            players pl ON (pr.player_id = pl.id)
+        WHERE
+            pt1.game_id <> 22
+        GROUP BY pl.id , pl.name
+        ORDER BY win_pct DESC
+      ");
+      return Response::json($stats);
+
+    }
+
+    public function getStattoptengamesplayed(){
+
+      $stats = DB::select("
+        SELECT
+            COUNT(pt.id) AS plays, g.name
+        FROM
+            playthroughs pt
+                INNER JOIN
+            games g ON pt.game_id = g.id
+        GROUP BY g.name
+        ORDER BY COUNT(pt.id) DESC , pt.date_played DESC
+        LIMIT 0 , 10
+      ");
+      return Response::json($stats);
+
+    }
+
+    public function getStattopwinningpercentages(){
+
+      $stats = DB::select("
+        SELECT
+            ROUND((SUM(CASE
+                        WHEN pt.player_id IS NULL THEN 0
+                        ELSE 1
+                    END) / COUNT(pr.player_id)) * 100,
+                    2) AS win_pct,
+            pl.name,
+            pl.id,
+            COUNT(pr.player_id) AS plays,
+            COUNT(pt.player_id) AS wins
+        FROM
+            participants pr
+                LEFT JOIN
+            playthroughs pt ON (pr.playthrough_id = pt.id
+                AND pr.player_id = pt.player_id
+                AND pt.date_played >= DATE_ADD(NOW(), INTERVAL - 1 MONTH))
+                INNER JOIN
+            playthroughs pt1 ON pr.playthrough_id = pt1.id
+                INNER JOIN
+            players pl ON (pr.player_id = pl.id)
+        WHERE
+            (pt1.date_played >= DATE_ADD(NOW(), INTERVAL - 1 MONTH))
+                AND pt1.game_id <> 22
+        GROUP BY pl.id , pl.name
+        HAVING COUNT(pr.player_id) >= 3
+        ORDER BY win_pct DESC
+      ");
+      return Response::json($stats);
+
+    }
+
 }
