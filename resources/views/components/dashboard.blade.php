@@ -5,6 +5,14 @@
 <hr>
 
 <div class="row">
+    <div class="col-md-12">
+            
+    <div id="percentages"></div>
+
+    </div>
+</div>
+
+<div class="row">
     <div class="col-md-6">
         <div id="bestday"></div>
     </div>
@@ -41,8 +49,16 @@ function chartInit(){
     drawPieChart();
 }
 
+function winningpercentages(){
+    
+    var url = "{{ action('DataController@getStattopwinningpercentages' )}}"
+    $.getJSON( url, function(data){
+      $('#percentages').html(data);
+    };
+}
+
 function drawWinChart(){
-    var winurl = "{{ action('DataController@getPlayerwinstats' )}}/" + {{ $player->id }};
+    var winurl = "{{ action('DataController@getPlayerwinstats' )}}/" + ;
     $.getJSON( winurl, function(stats){
         console.log(stats);
     var data = new google.visualization.arrayToDataTable(stats);

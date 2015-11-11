@@ -109,7 +109,7 @@ class DataController extends Controller {
             select count(pl.id) as wins, p.name from playthroughs pl 
             join players p on p.id = pl.player_id
             group by pl.player_id 
-            order by yeah desc
+            order by p.name desc
         ');
 
         return Response::json($stats);
@@ -213,19 +213,28 @@ class DataController extends Controller {
                 LEFT JOIN
             playthroughs pt ON (pr.playthrough_id = pt.id
                 AND pr.player_id = pt.player_id
-                AND pt.date_played >= DATE_ADD(NOW(), INTERVAL - 1 MONTH))
+                AND pt.date_played >= DATE_ADD(NOW(), INTERVAL - 5 MONTH))
                 INNER JOIN
             playthroughs pt1 ON pr.playthrough_id = pt1.id
                 INNER JOIN
             players pl ON (pr.player_id = pl.id)
         WHERE
-            (pt1.date_played >= DATE_ADD(NOW(), INTERVAL - 1 MONTH))
+            (pt1.date_played >= DATE_ADD(NOW(), INTERVAL - 5 MONTH))
                 AND pt1.game_id <> 22
         GROUP BY pl.id , pl.name
         HAVING COUNT(pr.player_id) >= 3
         ORDER BY win_pct DESC
       ");
-      return Response::json($stats);
+
+      print_r($stats);
+
+      foreach( $stats as $p){
+        $link = asset('people/'.$p->id.'.jpg');
+        echo $link;
+        echo '<img src="'. $link.'">';
+
+        echo 'hello world </div>';
+      }
 
     }
 
